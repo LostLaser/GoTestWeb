@@ -1,0 +1,29 @@
+
+{{ define "content" }}
+
+<div class="container">
+    <table id="book_table">
+        <tr>
+            <th>Title</th>
+            <th>ISBN</th>
+        </tr>
+        {{range .Library}}
+            <tr>
+                <td>{{.Title}}</td>
+                <td>{{.ISBN}}</td>
+                <td>
+                    <form action="/books/delete">
+                        <input type="hidden" name="isbn" value="{{.ISBN}}">
+                        <button type="submit" class="btn-floating btn-small waves-effect waves-light red right" name="action">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </table>
+    </br>
+    <a href="books/create" class="btn-floating btn-large waves-effect waves-light orange right"><i class="material-icons">add</i></a>
+</div>
+
+{{ end }}
