@@ -11,10 +11,10 @@ import (
 func main() {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/books", views.Home)
-	r.HandleFunc("/books/create_handle", controllers.CreateController)
-	r.HandleFunc("/books/create", views.Create)
-	r.HandleFunc("/books/delete_handle", controllers.DeleteController)
+	r.HandleFunc("/books", views.HomeBook)
+	r.HandleFunc("/books/create_handle", controllers.CreateBookController)
+	r.HandleFunc("/books/create", views.CreateBook)
+	r.HandleFunc("/books/delete_handle", controllers.DeleteBookController)
 
 	http.ListenAndServe(":8080", r)
 }

@@ -8,14 +8,14 @@ import (
 	"github.com/LostLaser/TestWeb/models"
 )
 
-// Create renders book creation form
-func Create(w http.ResponseWriter, r *http.Request) {
+// CreateBook renders book creation form
+func CreateBook(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("assets/layout.html", "assets/books/create.html"))
 	tmpl.ExecuteTemplate(w, "layout", "")
 }
 
-// Home retrieves all of the books in the library
-func Home(w http.ResponseWriter, r *http.Request) {
+// HomeBook retrieves all of the books in the library
+func HomeBook(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		fmt.Println(fmt.Errorf("Error: %v", err))
