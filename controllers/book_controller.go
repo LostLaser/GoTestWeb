@@ -40,7 +40,11 @@ func CreateBookController(w http.ResponseWriter, r *http.Request) {
 	// navigate to the page
 	newbook.ISBN = r.Form.Get("book_isbn")
 
-	models.AddBook(newbook)
+	err = models.AddBook(newbook)
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println(fmt.Errorf("Error: %v", err))
+	}
 
 	http.Redirect(w, r, "/books", http.StatusSeeOther)
 }

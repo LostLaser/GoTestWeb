@@ -12,17 +12,16 @@ type Book struct {
 // BookPageData is a response body for books
 type BookPageData struct {
 	PageTitle string
-	Library   []Book
+	Library   map[string]Book
 }
 
-// Library contains all of the books
-var Library map[string]Book
+var library = make(map[string]Book)
 
 // DeleteBook removes the first item found with specified ISBN
 func DeleteBook(isbn string) error {
 
-	if _, ok := Library[isbn]; ok {
-		delete(Library, isbn)
+	if _, ok := library[isbn]; ok {
+		delete(library, isbn)
 	} else {
 		return os.ErrNotExist
 	}
@@ -35,18 +34,18 @@ func AddBook(inputBook Book) error {
 	if inputBook.ISBN == "" {
 		return os.ErrInvalid
 	}
-	if _, ok := Library[inputBook.ISBN]; !ok {
+	if _, found := library[inputBook.ISBN]; found {
 		return os.ErrExist
 	}
 
-	Library[inputBook.ISBN] = inputBook
+	library[inputBook.ISBN] = inputBook
 
 	return nil
 }
 
 // GetBook retrieves a single book from the library
 func GetBook(isbn string) (Book, error) {
-	if val, ok := Library[isbn]; ok {
+	if val, found := library[isbn]; !found {
 		return val, nil
 	}
 
@@ -55,5 +54,5 @@ func GetBook(isbn string) (Book, error) {
 
 // GetBooks retrieves the entire library
 func GetBooks() map[string]Book {
-	return Library
+	return library
 }

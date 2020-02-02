@@ -23,14 +23,9 @@ func HomeBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tmpl := template.Must(template.ParseFiles("assets/layout.html", "assets/index.html"))
-	returnBooks := []models.Book{}
-	q := r.Form.Get("search_isbn")
+	// q := r.Form.Get("search_isbn")
 
-	for _, element := range models.Library {
-		if q == "" || element.ISBN == q || element.Title == q {
-			returnBooks = append(returnBooks, element)
-		}
-	}
+	returnBooks := models.GetBooks()
 
 	data := models.BookPageData{
 		PageTitle: "Library",
