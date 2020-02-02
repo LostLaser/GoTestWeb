@@ -1,6 +1,9 @@
 package models
 
-import "os"
+import (
+	"os"
+	"strings"
+)
 
 // Book contains information relevant to an individual book
 type Book struct {
@@ -52,7 +55,24 @@ func GetBook(isbn string) (Book, error) {
 	return Book{}, os.ErrNotExist
 }
 
-// GetBooks retrieves the entire library
-func GetBooks() map[string]Book {
+// GetLibrary retrieves the entire library
+func GetLibrary() map[string]Book {
 	return library
+}
+
+// SearchLibrary will find all books that match either input value
+func SearchLibrary(isbn string, title string) map[string]Book {
+	if isbn == "" && title == "" {
+		return library
+	}
+
+	var searchedMap = make(map[string]Book)
+
+	for key, value := range library {
+		if strings.Contains(key, isbn) || strings.Contains(value.Title, title) {
+			searchedMap[key] = value
+		}
+	}
+
+	return searchedMap
 }

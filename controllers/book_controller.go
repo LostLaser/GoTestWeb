@@ -42,7 +42,6 @@ func CreateBookController(w http.ResponseWriter, r *http.Request) {
 
 	err = models.AddBook(newbook)
 	if err != nil {
-		fmt.Println(err)
 		fmt.Println(fmt.Errorf("Error: %v", err))
 	}
 

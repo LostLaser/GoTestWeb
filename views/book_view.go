@@ -23,9 +23,9 @@ func HomeBook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tmpl := template.Must(template.ParseFiles("assets/layout.html", "assets/index.html"))
-	// q := r.Form.Get("search_isbn")
+	q := r.Form.Get("q")
 
-	returnBooks := models.GetBooks()
+	returnBooks := models.SearchLibrary(q, q)
 
 	data := models.BookPageData{
 		PageTitle: "Library",
