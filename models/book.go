@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"os"
 	"strings"
 )
@@ -20,13 +21,16 @@ type BookPageData struct {
 
 var library = make(map[string]Book)
 
+const notExistError = "book does not exist with isbn "
+const alreadyExistError = "book already exists with isbn "
+
 // DeleteBook removes the first item found with specified ISBN
 func DeleteBook(isbn string) error {
 
 	if _, ok := library[isbn]; ok {
 		delete(library, isbn)
 	} else {
-		return os.ErrNotExist
+		return errors.New(notExistError + string(isbn))
 	}
 
 	return nil
@@ -38,7 +42,7 @@ func AddBook(inputBook Book) error {
 		return os.ErrInvalid
 	}
 	if _, found := library[inputBook.ISBN]; found {
-		return os.ErrExist
+		return errors.New(alreadyExistError + string(inputBook.ISBN))
 	}
 
 	library[inputBook.ISBN] = inputBook
@@ -52,7 +56,7 @@ func GetBook(isbn string) (Book, error) {
 		return val, nil
 	}
 
-	return Book{}, os.ErrNotExist
+	return Book{}, errors.New(notExistError + string(isbn))
 }
 
 // GetLibrary retrieves the entire library
